@@ -17,6 +17,7 @@ public class User {
     @Column(name = "user_id")
     private Long id;
 
+    @Column(name = "username", unique = true)
     private String username;
 
     private String name;

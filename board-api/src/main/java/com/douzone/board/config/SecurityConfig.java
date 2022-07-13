@@ -28,6 +28,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
+        // 정적인 페이지에 대하여 접근권한 부여
         return (web -> web
                 .ignoring()
                 .antMatchers("/h2-console/**", "/favicon.ico"));
@@ -51,16 +52,19 @@ public class SecurityConfig {
          *  다른 주소로 해주고 싶으면 이런방식을 사용할 수 있습니다.
          */
         JwtAuthenticationFilter authenticationFilter = new JwtAuthenticationFilter(authenticationManager);
-        authenticationFilter.setFilterProcessesUrl("/api/login");
+        authenticationFilter.setFilterProcessesUrl("/login");
 
         http
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(STATELESS) // 세션 설정 끄기
 
-                // 권한 설정
                 .and()
+                .formLogin().disable()
+                .httpBasic().disable()
+
+                // 권한 설정
                 .authorizeHttpRequests()
-                .antMatchers("/api/login/**", "/api/token/refresh/**", "/user").permitAll()
+                .antMatchers("/login/**", "/api/token/refresh/**", "/user").permitAll()
                 .antMatchers(GET, "/api/user/**").hasAnyAuthority("ROLE_USER")
                 .antMatchers(POST, "/api/user/save/**").hasAnyAuthority("ROLE_ADMIN") // 사용자를 저장하기 위해서는 관리자 권한이 필요.
                 .anyRequest().authenticated() // 모든경로는 인증을 받아야 한다.

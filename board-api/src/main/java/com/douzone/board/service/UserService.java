@@ -51,7 +51,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
 
         if (user == null) {
-            log.error("User not found in the database");
+            log.error("user 정보가 db에 존재하지 않습니다.");
             throw new UsernameNotFoundException("User not found in the database");
         } else {
             log.info("User found in the database: {}", username);
@@ -85,8 +85,4 @@ public class UserService implements UserDetailsService {
         user.getRoles().add(role);
     }
 
-    public User login(LoginReqDto dto) {
-        // TODO : dto 값 db 에 조회해서 비교 후 토큰부여?
-        return null;
-    }
 }

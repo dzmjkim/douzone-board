@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
@@ -28,7 +25,7 @@ public class UserApiController {
     // 회원가입
     @CrossOrigin
     @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid RegisterReqDto dto, BindingResult bindingResult) {
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterReqDto dto, BindingResult bindingResult) {
         log.info("회원가입을 시도합니다. username => " + dto.getUsername());
 
         if (bindingResult.hasErrors()) {
@@ -40,16 +37,4 @@ public class UserApiController {
         return ResponseEntity.created(uri).body(userService.create(user));
     }
 
-    // 로그인
-    @CrossOrigin
-    @PostMapping("/login")
-    public ResponseEntity<User> login(@Valid LoginReqDto dto, BindingResult bindingResult) {
-        log.info("로그인 시도합니다. username => " + dto.getUsername());
-
-        if (bindingResult.hasErrors()) {
-            throw new KeyAlreadyExistsException("로그인에 실패 했습니다. username => " + dto.getUsername());
-        }
-
-        return ResponseEntity.ok(userService.login(dto));
-    }
 }

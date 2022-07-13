@@ -2,6 +2,7 @@ package com.douzone.board.config.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.douzone.board.web.dto.LoginReqDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -36,8 +38,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
      */
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        // request에 있는 username과 password를 파싱해서 자바 Object로 받기
+        ObjectMapper om = new ObjectMapper();
+        LoginReqDto dto = null;
+
+        try {
+            dto = om.readValue(request.getInputStream(), LoginReqDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String username = dto.getUsername();
+        String password = dto.getPassword();
+
 
         log.info("Username is : {}", username);
         log.info("password is : {}", password);

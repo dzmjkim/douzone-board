@@ -2,7 +2,6 @@ package com.douzone.board.web.api;
 
 import com.douzone.board.entity.User;
 import com.douzone.board.service.UserService;
-import com.douzone.board.web.dto.LoginReqDto;
 import com.douzone.board.web.dto.RegisterReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

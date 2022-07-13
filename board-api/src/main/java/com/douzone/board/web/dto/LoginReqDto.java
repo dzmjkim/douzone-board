@@ -1,6 +1,5 @@
 package com.douzone.board.web.dto;
 
-import com.douzone.board.entity.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

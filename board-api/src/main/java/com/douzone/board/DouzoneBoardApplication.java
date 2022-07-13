@@ -9,8 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
-
 @SpringBootApplication
 public class DouzoneBoardApplication {
 	public static void main(String[] args) {
@@ -30,7 +28,7 @@ public class DouzoneBoardApplication {
 			userService.saveRole(new Role(null, "ROLE_ADMIN"));
 
 			// user table init
-			userService.saveUser(new User(null, "user", "1", 1, new ArrayList<>()));
+			userService.saveUser(new User(null, "user", "jonghyunLim", "1",1));
 
 			// role_user table init
 			userService.addRoleToUser("user", "ROLE_USER");

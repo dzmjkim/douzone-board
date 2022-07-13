@@ -1,32 +1,29 @@
 package com.douzone.board.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
 
-@Builder
+@Entity
+@Getter
+@Setter
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Entity // 디비에 테이블을 생성
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 번호 증가 전략이 데이터베이스를 따라간다.
-    @Column(name = "user_name")
+    @Column(name = "user_id")
     private Long id;
 
     private String username;
 
+    private String name;
+
     private String password;
 
     @Column(name = "class")
-    private int userClass;
+    private Integer userClass;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
 }

@@ -1,10 +1,9 @@
 package com.douzone.board.service;
 
-import com.douzone.board.entity.Role;
 import com.douzone.board.entity.User;
+import com.douzone.board.entity.Role;
 import com.douzone.board.repository.RoleRepository;
 import com.douzone.board.repository.UserRepository;
-import com.douzone.board.web.dto.LoginReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,9 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.openmbean.KeyAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -50,6 +49,10 @@ public class UserService implements UserDetailsService {
         // find user
         User user = userRepository.findByUsername(username);
 
+        //Fixme 1
+//        List<Role> userRoles = userRoleRepository.findRoleByUsername(user.getUsername());
+
+
         if (user == null) {
             log.error("user 정보가 db에 존재하지 않습니다.");
             throw new UsernameNotFoundException("User not found in the database");
@@ -58,10 +61,10 @@ public class UserService implements UserDetailsService {
         }
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        });
+        //Fixme 2
+//        user.getRoles().forEach(role -> {
+//            authorities.add(new SimpleGrantedAuthority(role.getName()));
+//        });
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
@@ -82,7 +85,9 @@ public class UserService implements UserDetailsService {
         log.info("Adding role {} to user {}",roleName, username);
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName(roleName);
-        user.getRoles().add(role);
+
+        //Fixme
+//        user.getRoles().add(role);
     }
 
 }

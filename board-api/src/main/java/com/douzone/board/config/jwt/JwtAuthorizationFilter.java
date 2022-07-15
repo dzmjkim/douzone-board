@@ -68,6 +68,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request, response);
                 } catch (Exception exception) {
                     // exception 1 : token 이 유효하지 않을 때 (token 을 확인할 수 없거나, 유효기간이 지났을 경우)
+
+                    //TODO refresh Token check
+                    //access token 과 refresh token을 같이 던지는지?
+                    //같이 던진다면 username을 같이 던지는지?
+                    //같이 던지지 않는다면 검증후 refresh token을 다시 던질 때 username을 같이 던져야함.
                     log.error("Error logging in: {}", exception.getMessage());
                     response.setHeader("error", exception.getMessage());
 
@@ -86,5 +91,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
             }
         }
+    }
+
+    void checkRefreshToken(String username, String refreshToken){
+
     }
 }

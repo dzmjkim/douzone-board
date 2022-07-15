@@ -3,6 +3,7 @@ package com.douzone.board.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -27,4 +28,6 @@ public class User {
     @Column(name = "class")
     private Integer userClass;
 
+    @Column(name = "refresh_token")
+    private String refreshToken;
 }

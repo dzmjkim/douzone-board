@@ -14,10 +14,6 @@ import java.io.Serializable;
 @Builder
 public class UserRole implements Serializable {
 
-//    @Id
-//    @Column(name = "user_id")
-//    private Long userId;
-
     @Id
     @ManyToOne
     @JoinColumn(name = "user_id")

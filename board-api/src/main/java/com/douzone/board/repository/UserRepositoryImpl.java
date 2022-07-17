@@ -3,9 +3,12 @@ package com.douzone.board.repository;
 import com.douzone.board.entity.QUser;
 import com.douzone.board.entity.User;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UserRepositoryImpl extends QuerydslRepositorySupport implements CustomUserRepository{
-    public UserRepositoryImpl(Class<?> domainClass) {
+
+    public UserRepositoryImpl() {
         super(User.class);
     }
 

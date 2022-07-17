@@ -3,3 +3,14 @@ Content-Type: application/json
 Host: localhost:8080
 Authorization: Bearer adsfasfdasf.adfs.afda;
 
+###
+
+POST /register
+Content-Type: application/json
+Host: localhost:8080
+
+{
+  "username": "liverbird",
+  "password": "1234",
+  "userClass": 2
+}

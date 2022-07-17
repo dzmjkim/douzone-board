@@ -29,7 +29,8 @@ public class UserApiController {
     // 회원가입
     @CrossOrigin
     @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody RegisterReqDto dto, BindingResult bindingResult) {
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterReqDto dto, BindingResult bindingResult)
+        throws IllegalAccessException {
         log.info("회원가입을 시도합니다. username => " + dto.getUsername());
 
         if (bindingResult.hasErrors()) {

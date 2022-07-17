@@ -3,6 +3,7 @@ package com.douzone.board.service;
 import com.douzone.board.entity.Anonymity;
 import com.douzone.board.repository.AnonymityRepository;
 import com.douzone.board.web.dto.AnonymityDto;
+import com.douzone.board.web.dto.AnonymityReqDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -40,10 +41,10 @@ public class AnonymityService {
         anonymityRepository.save(anonymity);
     }
 
-    public void create(String mailContent) {
+    public void create(AnonymityReqDto reqDto) {
         anonymityRepository.save(Anonymity.builder()
                 .mailCreateDt(LocalDateTime.now())
-                .mailContent(mailContent)
+                .mailContent(reqDto.getMailContent())
                 .sendYn("N")
                 .build());
     }

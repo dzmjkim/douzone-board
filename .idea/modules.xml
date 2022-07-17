@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/douzone-board.iml" filepath="$PROJECT_DIR$/.idea/douzone-board.iml" />
+      <module fileurl="file://$PROJECT_DIR$/board-api/douzone-board.iml" filepath="$PROJECT_DIR$/board-api/douzone-board.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,5 @@
+GET /login
+Content-Type: application/json
+Host: localhost:8080
+Authorization: Bearer adsfasfdasf.adfs.afda;
+

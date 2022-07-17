@@ -4,6 +4,7 @@ import com.douzone.board.entity.User;
 import com.douzone.board.entity.Role;
 import com.douzone.board.repository.RoleRepository;
 import com.douzone.board.repository.UserRepository;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

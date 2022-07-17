@@ -6,7 +6,10 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
+import javax.servlet.annotation.WebFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,6 +29,7 @@ import java.util.Map;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 // 요청 필터당 하나만 존재하는 필터이기 때문에 application 으로 들어오는 모든 요청을 여기에서 가로챕니다.
@@ -34,7 +38,16 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // checkRefreshToken();
+
+        Algorithm algorithm = Algorithm.HMAC256(JwtProperties.SECRET.getBytes());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        DecodedJWT decodedJWT;
+
+        String refreshTokentest = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2xvZ2luIiwiZXhwIjoxNjU4OTA1MjA0fQ.5zq7_4KQ_cltnD_aTTZAqFyKkwShlGsCQi4c5XgQVks";
+
+        decodedJWT = verifier.verify(refreshTokentest);
+
+
         // 1. 로그인 경로인지 확인 (login 은 여기에서 작업할 필요가 없기 때문.) == 아무일도 하지않을거임.
         if (request.getServletPath().equals("/login") || request.getServletPath().equals("/api/token/refresh")) {
             filterChain.doFilter(request, response);
@@ -47,9 +60,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 try {
                     // token 검증 작업
                     String token = authorizationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256(JwtProperties.SECRET.getBytes()); // 토큰 생성할 때와 같은 알고리즘으로 풀어야함.
-                    JWTVerifier verifier = JWT.require(algorithm).build();
-                    DecodedJWT decodedJWT = verifier.verify(token);
+
+                    decodedJWT = verifier.verify(token);
 
                     // 토큰이 유효한지 확인되면, 사용자의 이름을 가져올 수 있습니다.
                     String username = decodedJWT.getSubject(); // token 과 함께 제공되는 사용자 이름을 줍니다.
@@ -73,6 +85,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                     //TODO refresh Token check
                     //access token 과 refresh token을 같이 던지는지?
+
                     log.error("Error logging in: {}", exception.getMessage());
                     response.setHeader("error", exception.getMessage());
 
@@ -80,7 +93,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 //                    response.sendError(FORBIDDEN.value()); // 권한이 없기 때문에 403 던져버리기~!
 
                     /* error 를 body 로 던지기 (둘중 하나만 할 수 있음) */
-                    response.setStatus(FORBIDDEN.value());
+                    response.setStatus(UNAUTHORIZED.value());
                     Map<String, String> error = new HashMap<>();
                     error.put("error_message", exception.getMessage());
                     response.setContentType(APPLICATION_JSON_VALUE);
@@ -95,11 +108,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     void checkRefreshToken(String refreshToken){
 
-            String checkingExpireTime = refreshToken.split(".")[1];
 
-            Base64.Decoder decoder = Base64.getDecoder();
-            byte[] userInfo = decoder.decode(checkingExpireTime);
-            String decodedUserInfo = userInfo.toString();
-            log.debug("[]", decodedUserInfo);
     }
 }

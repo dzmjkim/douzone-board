@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Base64;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -71,8 +72,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                     //TODO refresh Token check
                     //access token 과 refresh token을 같이 던지는지?
-                    //같이 던진다면 username을 같이 던지는지?
-                    //같이 던지지 않는다면 검증후 refresh token을 다시 던질 때 username을 같이 던져야함.
                     log.error("Error logging in: {}", exception.getMessage());
                     response.setHeader("error", exception.getMessage());
 
@@ -93,7 +92,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
     }
 
-    void checkRefreshToken(String username, String refreshToken){
+    void checkRefreshToken(String refreshToken){
+            String checkingExpireTime = refreshToken.split(".")[1];
+
+            Base64.Decoder decoder = Base64.getDecoder();
+            byte[] userInfo = decoder.decode(checkingExpireTime);
+            String decodedUserInfo = userInfo.toString();
 
     }
 }

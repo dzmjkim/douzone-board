@@ -34,6 +34,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        // checkRefreshToken();
         // 1. 로그인 경로인지 확인 (login 은 여기에서 작업할 필요가 없기 때문.) == 아무일도 하지않을거임.
         if (request.getServletPath().equals("/login") || request.getServletPath().equals("/api/token/refresh")) {
             filterChain.doFilter(request, response);
@@ -93,11 +94,12 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     }
 
     void checkRefreshToken(String refreshToken){
+
             String checkingExpireTime = refreshToken.split(".")[1];
 
             Base64.Decoder decoder = Base64.getDecoder();
             byte[] userInfo = decoder.decode(checkingExpireTime);
             String decodedUserInfo = userInfo.toString();
-
+            log.debug("[]", decodedUserInfo);
     }
 }

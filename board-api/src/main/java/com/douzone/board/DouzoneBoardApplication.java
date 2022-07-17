@@ -19,6 +19,7 @@ public class DouzoneBoardApplication {
 		Base64.Decoder decoder = Base64.getDecoder();
 		byte[] userInfo = decoder.decode(checkingExpireTime);
 		String decodedUserInfo = userInfo.toString();
+
 		SpringApplication.run(DouzoneBoardApplication.class, args);
 	}
 

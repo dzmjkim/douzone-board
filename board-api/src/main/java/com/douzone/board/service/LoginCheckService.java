@@ -4,5 +4,5 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface LoginCheckService {
-    void checkrefresh(HttpServletRequest request, HttpServletResponse response);
+    void checkRefresh(HttpServletRequest request, HttpServletResponse response);
 }

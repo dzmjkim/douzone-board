@@ -34,7 +34,7 @@ public class LoginCheckServiceImpl implements LoginCheckService{
 
 
     @Override
-    public void checkrefresh(HttpServletRequest request,
+    public void checkRefresh(HttpServletRequest request,
                              HttpServletResponse response) {
 
         // 사용자가 토큰을 갱신할 수 있도록 요청을 설정할 수 있는 다른 끝점을 만듭니다.
@@ -47,7 +47,7 @@ public class LoginCheckServiceImpl implements LoginCheckService{
                 try {
                     // token 검증 작업
                     String refreshToken = authorizationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes()); // 토큰 생성할 때와 같은 알고리즘으로 풀어야함.
+                    Algorithm algorithm = Algorithm.HMAC256(JwtProperties.SECRET.getBytes()); // 토큰 생성할 때와 같은 알고리즘으로 풀어야함.
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(refreshToken);
 

@@ -4,7 +4,11 @@
     <facet type="web" name="Web">
       <configuration>
         <webroots />
-        <sourceRoots />
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/src/main/java" />
+          <root url="file://$MODULE_DIR$/src/main/resources" />
+          <root url="file://$MODULE_DIR$/target/generated-sources/annotations" />
+        </sourceRoots>
       </configuration>
     </facet>
     <facet type="jpa" name="JPA">
@@ -13,6 +17,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="douzone-board" />
+          <factory-entry name="entityManagerFactory" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
@@ -28,6 +33,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -127,5 +133,14 @@
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-el:9.0.64" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.validator:hibernate-validator:6.2.3.Final" level="project" />
     <orderEntry type="library" name="Maven: jakarta.validation:jakarta.validation-api:2.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.querydsl:querydsl-apt:5.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.querydsl:querydsl-codegen:5.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.querydsl:codegen-utils:5.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.jdt:ecj:3.26.0" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" name="Maven: io.github.classgraph:classgraph:4.8.108" level="project" />
+    <orderEntry type="library" name="Maven: com.querydsl:querydsl-jpa:5.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.querydsl:querydsl-core:5.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.mysema.commons:mysema-commons-lang:0.2.4" level="project" />
   </component>
 </module>

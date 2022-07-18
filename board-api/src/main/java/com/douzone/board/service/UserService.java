@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
 //            throw new KeyAlreadyExistsException("이미 가입된 유저입니다. username -> " + user.getUsername());
 //        }
         //FixMe: role 받아서 하는거 구현하면 수정되야 할 구문
-        Role role = roleRepository.findById(3L).orElseThrow(IllegalAccessException::new);
+        Role role = roleRepository.findById(1L).orElseThrow(IllegalAccessException::new);
 
         // TODO 1 : password 암호화
         user.setPassword(passwordEncoder.encode(user.getPassword()));

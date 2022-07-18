@@ -19,8 +19,6 @@ import java.time.LocalDateTime;
 public class DouzoneBoardApplication {
 
 	public static void main(String[] args) {
-
-
 		SpringApplication.run(DouzoneBoardApplication.class, args);
 	}
 

@@ -10,10 +10,16 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -59,12 +65,15 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(STATELESS) // 세션 설정 끄기
 
                 .and()
+                .cors().configurationSource(corsConfigurationSource()) // custom 으로 할때(밑에 Bean 있음.)
+
+                .and()
                 .formLogin().disable()
                 .httpBasic().disable()
 
                 // 권한 설정
                 .authorizeHttpRequests()
-                .antMatchers("/login/**", "/api/token/refresh/**", "/user").permitAll()
+                .antMatchers("/login/**", "/api/token/refresh/**", "/user", "/anonymity").permitAll()
                 .antMatchers(GET, "/api/user/**").hasAnyAuthority("ROLE_USER")
                 .antMatchers(POST, "/api/user/save/**").hasAnyAuthority("ROLE_ADMIN") // 사용자를 저장하기 위해서는 관리자 권한이 필요.
                 .anyRequest().authenticated() // 모든경로는 인증을 받아야 한다.
@@ -76,5 +85,21 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class); // 권한필터 // 모든 요청을 받으려면 다른 필터들 보다 먼저 처리되어야 한다.
 
         return http.build();
+    }
+
+    // CORS 허용 적용
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOriginPattern("*"); // url
+        configuration.addAllowedHeader("*");        // header
+        configuration.addAllowedMethod("*");        // method
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
     }
 }

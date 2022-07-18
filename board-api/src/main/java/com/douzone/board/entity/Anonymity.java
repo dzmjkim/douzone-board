@@ -2,10 +2,7 @@ package com.douzone.board.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,8 +13,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class Anonymity {
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "mail_id")
+    private Long id;
+
     @Column(name = "mail_create_dt")
     private LocalDateTime mailCreateDt;
 
@@ -26,5 +26,4 @@ public class Anonymity {
 
     @Column(name = "mail_content")
     private String mailContent;
-
 }

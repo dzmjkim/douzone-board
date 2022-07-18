@@ -29,5 +29,4 @@ public class Assignment {
 
     @Column(name = "class_category")
     private Integer classCategory;
-
 }

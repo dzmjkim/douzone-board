@@ -27,7 +27,6 @@ public class UserApiController {
     private final LoginCheckService loginCheckService;
 
     // 회원가입
-    @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<User> register(@Valid @RequestBody RegisterReqDto dto, BindingResult bindingResult)
         throws IllegalAccessException {

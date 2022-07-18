@@ -12,14 +12,14 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserRole implements Serializable {
-
-//    @Id
-//    @Column(name = "user_id")
-//    private Long userId;
+@Table(name = "user_role")
+public class UserRole{
 
     @Id
+    private Long user_id;
+
     @ManyToOne
+    @MapsId
     @JoinColumn(name = "user_id")
     private User user;
 

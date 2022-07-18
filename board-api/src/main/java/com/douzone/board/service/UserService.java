@@ -2,8 +2,11 @@ package com.douzone.board.service;
 
 import com.douzone.board.entity.User;
 import com.douzone.board.entity.Role;
+import com.douzone.board.entity.UserRole;
 import com.douzone.board.repository.RoleRepository;
 import com.douzone.board.repository.UserRepository;
+import com.douzone.board.repository.UserRoleRepository;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,8 +29,9 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRoleRepository userRoleRepository;
 
-    public User create(User user) {
+    public User create(User user) throws IllegalAccessException {
         log.info("서비스에서 회원가입을 진행합니다.");
 
         // 이미 가입된 유저라면
@@ -35,11 +39,19 @@ public class UserService implements UserDetailsService {
 //            log.error("이미 가입된 유저입니다. username -> " + user.getUsername());
 //            throw new KeyAlreadyExistsException("이미 가입된 유저입니다. username -> " + user.getUsername());
 //        }
+        //FixMe: role 받아서 하는거 구현하면 수정되야 할 구문
+        Role role = roleRepository.findById(3L).orElseThrow(IllegalAccessException::new);
 
         // TODO 1 : password 암호화
-        // TODO 2 : repository 에 저장하기 전에 role 추가
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // TODO 2 : role을 받아서 admin, user 구분
+        UserRole userRole = UserRole.builder()
+            .user(user)
+            .role(role).build();
 
-        return user;
+        userRoleRepository.save(userRole);
+
+        return userRepository.save(user);
     }
 
     @Override

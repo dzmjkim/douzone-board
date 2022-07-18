@@ -25,18 +25,18 @@ public class DouzoneBoardApplication {
 		return new BCryptPasswordEncoder();
 	}
 
-//	@Bean
-//	CommandLineRunner run(UserService userService) {
-//		return args -> {
-//			// role table init
-//			userService.saveRole(new Role(null, "ROLE_USER"));
-//			userService.saveRole(new Role(null, "ROLE_ADMIN"));
-//
-//			// user table init
+	@Bean
+	CommandLineRunner run(UserService userService) {
+		return args -> {
+			// role table init
+			userService.saveRole(new Role(null, "ROLE_USER"));
+			userService.saveRole(new Role(null, "ROLE_ADMIN"));
+
+			// user table init
 //			userService.saveUser(new User(null, "user", "jonghyunLim", "1",1));
-//
-//			// role_user table init
+
+			// role_user table init
 //			userService.addRoleToUser("user", "ROLE_USER");
-//		};
-//	}
+		};
+	}
 }

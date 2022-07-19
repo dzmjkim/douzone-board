@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
     private final UserRoleRepository userRoleRepository;
 
     public User create(User user) throws IllegalAccessException {
-        log.info("서비스에서 회원가입을 진행합니다.");
+        log.info("계정을 생성합니다. username => {}", user.getUsername());
 
         // 이미 가입된 유저라면
 //        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
@@ -56,7 +56,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("사용자가 로그인을 시도합니다.");
+        log.info("사용자가 로그인을 시도합니다. username => {}", username);
 
         // find user
         User user = userRepository.findByUsername(username);
@@ -69,7 +69,7 @@ public class UserService implements UserDetailsService {
             log.error("user 정보가 db에 존재하지 않습니다.");
             throw new UsernameNotFoundException("User not found in the database");
         } else {
-            log.info("user 정보를 찾았습니다 username =>: {}", username);
+            log.info("user 정보를 찾았습니다 username => {}", username);
         }
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();

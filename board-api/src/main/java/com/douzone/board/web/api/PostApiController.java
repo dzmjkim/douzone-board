@@ -1,10 +1,12 @@
 package com.douzone.board.web.api;
 
-import com.douzone.board.service.BoardService;
+import com.douzone.board.service.PostService;
 import com.douzone.board.web.dto.PostCreateReqDto;
+import com.douzone.board.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,24 +14,30 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.security.Principal;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
 @RestController
 public class PostApiController {
-    private final BoardService boardService;
+    private final PostService postService;
 
-//    @GetMapping("/board")
-//    public ResponseEntity<List<AnonymityDto>> getAll() {
-//        return ResponseEntity.ok().body(boardService.findAll());
-//    }
+    @GetMapping("/board")
+    public ResponseEntity<List<PostDto>> getAll() {
+        return ResponseEntity.ok().body(postService.findAll());
+    }
 
     /**
      * 게시글 작성
      */
     @PostMapping("/board")
     public ResponseEntity<?> create(@RequestBody PostCreateReqDto dto, Principal principal) {
-        boardService.create(dto, principal.getName());
+        if (Objects.isNull(dto.getPostContent()) || Objects.isNull(dto.getPostTitle())) {
+            log.error("게시글 제목 또는 내용이 비어있습니다. 제목 => {} 내용 => {}", dto.getPostTitle(), dto.getPostContent());
+            return ResponseEntity.badRequest().build();
+        }
+        postService.create(dto, principal.getName());
 
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/board").toUriString());
         return ResponseEntity.created(uri).build();

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class PostCreateReqDto {
-    String postTitle;
-    String postContent;
+    private String postTitle;
+    private String postContent;
 }

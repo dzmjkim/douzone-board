@@ -47,7 +47,7 @@ public class LoginCheckServiceImpl implements LoginCheckService{
                 try {
                     // token 검증 작업
                     String refreshToken = authorizationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes()); // 토큰 생성할 때와 같은 알고리즘으로 풀어야함.
+                    Algorithm algorithm = Algorithm.HMAC256(JwtProperties.SECRET.getBytes()); // 토큰 생성할 때와 같은 알고리즘으로 풀어야함.
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(refreshToken);
 

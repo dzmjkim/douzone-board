@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
 //            throw new KeyAlreadyExistsException("이미 가입된 유저입니다. username -> " + user.getUsername());
 //        }
         //FixMe: role 받아서 하는거 구현하면 수정되야 할 구문
-        Role role = roleRepository.findById(3L).orElseThrow(IllegalAccessException::new);
+        Role role = roleRepository.findById(1L).orElseThrow(IllegalAccessException::new);
 
         // TODO 1 : password 암호화
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -56,7 +56,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("UserService : 진입");
+        log.info("사용자가 로그인을 시도합니다.");
 
         // find user
         User user = userRepository.findByUsername(username);
@@ -69,7 +69,7 @@ public class UserService implements UserDetailsService {
             log.error("user 정보가 db에 존재하지 않습니다.");
             throw new UsernameNotFoundException("User not found in the database");
         } else {
-            log.info("User found in the database: {}", username);
+            log.info("user 정보를 찾았습니다 username =>: {}", username);
         }
 
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();

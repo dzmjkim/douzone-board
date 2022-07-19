@@ -65,7 +65,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(STATELESS) // 세션 설정 끄기
 
                 .and()
-                .cors().configurationSource(corsConfigurationSource()) // custom 으로 할때(밑에 Bean 있음.)
+                .cors().configurationSource(corsConfigurationSource()) // cors 설정을 custom 으로 할때(밑에 Bean 있음.)
 
                 .and()
                 .formLogin().disable()

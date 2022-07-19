@@ -6,6 +6,7 @@ import com.douzone.board.web.dto.LoginReqDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -51,7 +52,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = dto.getUsername();
         String password = dto.getPassword();
 
-
         log.info("Username is : {}", username);
         log.info("password is : {}", password);
 
@@ -93,7 +93,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
-
+        // TODO : login 을 성공했으니 db 에 refresh token 을 저장해 주어야함.
+        log.info("{} 님이 로그인 하였습니다.", user.getUsername());
 
         /* token header 로 던지기 */
 //        response.setHeader("access_token", access_token);
@@ -103,8 +104,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Map<String, String> tokens = new HashMap<>();
         tokens.put("access_token", access_token);
         tokens.put("refresh_token", refresh_token);
-
-
 
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);

@@ -228,3 +228,5 @@ $RECYCLE.BIN/
 board-api/.idea
 .idea
 board-api/target
+.idea
+board-api/board-api.iml

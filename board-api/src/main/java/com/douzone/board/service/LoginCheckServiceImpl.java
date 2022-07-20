@@ -11,6 +11,8 @@ import com.douzone.board.config.jwt.JwtProperties;
 import com.douzone.board.entity.User;
 import com.douzone.board.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -97,5 +99,17 @@ public class LoginCheckServiceImpl implements LoginCheckService{
             }
         }
 
+    @Override
+    public void insertRefreshToken(HttpServletRequest request) {
+        String refreshToken = request.getHeader(AUTHORIZATION);
+        String username =  JWT.decode(refreshToken).getSubject();
+
+        User user = userRepository.findByUsername(username);
+
+        user.setRefreshToken(refreshToken);
+
+        userRepository.save(user);
     }
+
+}
 // }

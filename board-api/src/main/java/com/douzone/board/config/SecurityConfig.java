@@ -73,8 +73,8 @@ public class SecurityConfig {
 
                 // 권한 설정
                 .authorizeHttpRequests()
-                .antMatchers("/login/**", "/api/token/refresh/**", "/register").permitAll()
-                .antMatchers(GET, "/anonymity").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/login/**", "/api/token/refresh/**", "/user", "/register", "/inputrefresh").permitAll()
+                .antMatchers(GET, "/api/user/**").hasAnyAuthority("ROLE_USER")
                 .antMatchers(POST, "/api/user/save/**").hasAnyAuthority("ROLE_ADMIN") // 사용자를 저장하기 위해서는 관리자 권한이 필요.
                 .anyRequest().authenticated() // 모든경로는 인증을 받아야 한다.
 

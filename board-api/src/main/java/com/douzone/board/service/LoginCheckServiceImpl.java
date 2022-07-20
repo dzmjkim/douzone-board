@@ -36,7 +36,7 @@ public class LoginCheckServiceImpl implements LoginCheckService{
 
 
     @Override
-    public void checkrefresh(HttpServletRequest request,
+    public void checkRefresh(HttpServletRequest request,
                              HttpServletResponse response) {
         log.info("refresh token 을 검증합니다.");
 

@@ -4,7 +4,7 @@ import com.douzone.board.entity.User;
 import com.douzone.board.service.LoginCheckService;
 import com.douzone.board.service.UserService;
 import com.douzone.board.web.dto.RegisterReqDto;
-import java.util.Base64;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class UserApiController {
 
     @GetMapping("/api/token/refresh")
     public void refreshTokenCheck(HttpServletRequest request, HttpServletResponse response){
-        loginCheckService.checkrefresh(request, response);
+        loginCheckService.checkRefresh(request, response);
     }
 
 }

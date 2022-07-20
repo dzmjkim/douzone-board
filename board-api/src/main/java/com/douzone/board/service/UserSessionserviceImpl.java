@@ -12,7 +12,6 @@ import com.douzone.board.entity.User;
 import com.douzone.board.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class LoginCheckServiceImpl implements LoginCheckService{
+public class UserSessionserviceImpl implements UserSessionService {
 
     private final UserService userService;
     private final UserRepository userRepository;
@@ -109,6 +108,14 @@ public class LoginCheckServiceImpl implements LoginCheckService{
         user.setRefreshToken(refreshToken);
 
         userRepository.save(user);
+    }
+
+    @Override
+    public void logout(String name) {
+        User user = userRepository.findByUsername(name);
+
+        user.setRefreshToken(null);
+
     }
 
 }

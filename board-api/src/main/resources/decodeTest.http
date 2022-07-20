@@ -51,3 +51,9 @@ GET /inputrefresh
 Content-Type: application/json
 Host: localhost:8080
 Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NTkwMDc3ODF9.o1PrOC6XSvf6iXSHSIDc98dmlP6bkTTW8Us1ODEd0dw
+
+###
+
+GET /logout
+Content-Type: application/json
+Host: localhost:8080

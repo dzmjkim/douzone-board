@@ -46,10 +46,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             dto = om.readValue(request.getInputStream(), LoginReqDto.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("로그인 데이터를 읽어오던 중 오류가 발생했습니다. message => {}", e.getMessage());
+//            e.printStackTrace();
         }
 
-        String username = dto.getUsername();
+        if (Objects.isNull(dto)) {
+            log.error("전달받은 login 객체가 없습니다.");
+        }
+
+        String username = Objects.requireNonNull(dto).getUsername();
         String password = dto.getPassword();
 
         log.info("Username is : {}", username);

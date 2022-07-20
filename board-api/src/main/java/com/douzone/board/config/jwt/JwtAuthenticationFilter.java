@@ -99,7 +99,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
-        // TODO : login 을 성공했으니 db 에 refresh token 을 저장해 주어야함.
         log.info("{} 님이 로그인 하였습니다.", user.getUsername());
 
         /* token header 로 던지기 */

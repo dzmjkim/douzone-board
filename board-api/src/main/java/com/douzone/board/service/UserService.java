@@ -6,6 +6,8 @@ import com.douzone.board.entity.UserRole;
 import com.douzone.board.repository.RoleRepository;
 import com.douzone.board.repository.UserRepository;
 import com.douzone.board.repository.UserRoleRepository;
+
+import javax.management.openmbean.KeyAlreadyExistsException;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -34,17 +37,17 @@ public class UserService implements UserDetailsService {
     public User create(User user) throws IllegalAccessException {
         log.info("계정을 생성합니다. username => {}", user.getUsername());
 
+        // TODO : 찍어보자
         // 이미 가입된 유저라면
-//        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-//            log.error("이미 가입된 유저입니다. username -> " + user.getUsername());
-//            throw new KeyAlreadyExistsException("이미 가입된 유저입니다. username -> " + user.getUsername());
-//        }
-        //FixMe: role 받아서 하는거 구현하면 수정되야 할 구문
+        if (Objects.nonNull(userRepository.findByUsername(user.getUsername()))) {
+            log.error("이미 가입된 유저입니다. username -> " + user.getUsername());
+            throw new KeyAlreadyExistsException("이미 가입된 유저입니다. username -> " + user.getUsername());
+        }
+
         Role role = roleRepository.findById(1L).orElseThrow(IllegalAccessException::new);
 
-        // TODO 1 : password 암호화
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        // TODO 2 : role을 받아서 admin, user 구분
+
         UserRole userRole = UserRole.builder()
             .user(user)
             .role(role).build();
@@ -61,10 +64,6 @@ public class UserService implements UserDetailsService {
         // find user
         User user = userRepository.findByUsername(username);
 
-        //Fixme 1
-//        List<Role> userRoles = userRoleRepository.findRoleByUsername(user.getUsername());
-
-
         if (user == null) {
             log.error("user 정보가 db에 존재하지 않습니다.");
             throw new UsernameNotFoundException("User not found in the database");
@@ -72,11 +71,22 @@ public class UserService implements UserDetailsService {
             log.info("user 정보를 찾았습니다 username => {}", username);
         }
 
+        // Fixme : user 는 여러개의 권한을 가질 수 있어야 한다.
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        //Fixme 2
-//        user.getRoles().forEach(role -> {
-//            authorities.add(new SimpleGrantedAuthority(role.getName()));
-//        });
+
+        // userRole table 에서 userId로 UserRole 들을 들고옴.
+        List<UserRole> userRoles = userRoleRepository.findUserRolesByUser_id(user.getId());
+        List<Role> roles = new ArrayList<>();
+
+        // 가져온 userRole 들의 roleId 들로 Role 들을 만듬
+        for (UserRole userRole : userRoles) {
+            roles.add(roleRepository.findById(userRole.getRole().getId()).orElseThrow(IllegalArgumentException::new));
+        }
+
+        // 만든 Role 들을 유저 디테일스 오쏘라에 추가
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        }
 
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
@@ -94,12 +104,11 @@ public class UserService implements UserDetailsService {
     }
 
     public void addRoleToUser(String username, String roleName) {
-        log.info("Adding role {} to user {}",roleName, username);
+        log.info("userRole을 추가합니다 role => {} to user => {}",roleName, username);
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName(roleName);
 
-        // Fixme
-//        user.getRoles().add(role);
+        userRoleRepository.save(new UserRole(user.getId(), user, role));
     }
 
 }

@@ -3,6 +3,7 @@ package com.douzone.board.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -18,5 +19,6 @@ public class Role {
     private Long id;
 
     @Column(name = "role_name")
+    @NotNull
     private String name;
 }

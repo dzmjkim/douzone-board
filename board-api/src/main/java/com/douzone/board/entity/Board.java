@@ -3,6 +3,7 @@ package com.douzone.board.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,12 +21,15 @@ public class Board {
     private Long postNo;
 
     @Column(name = "post_title")
+    @NotNull
     private String postTitle;
 
     @Column(name = "post_content")
+    @NotNull
     private String postContent;
 
     @Column(name = "post_create_dt")
+    @NotNull
     private LocalDateTime postCreateDt;
 
     @Column(name = "post_modify_dt")
@@ -33,6 +37,7 @@ public class Board {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @NotNull
     private User user;
 
 }

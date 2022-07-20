@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -23,13 +24,17 @@ public class User {
     private Long id;
 
     @Column(name = "username", unique = true)
+    @NotNull
     private String username;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String password;
 
     @Column(name = "class")
+    @NotNull
     private Integer userClass;
 
     @Column(name = "refresh_token")

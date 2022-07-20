@@ -7,6 +7,7 @@ import com.douzone.board.web.dto.LoginReqDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -46,12 +47,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             dto = om.readValue(request.getInputStream(), LoginReqDto.class);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("로그인 데이터를 읽어오던 중 오류가 발생했습니다. message => {}", e.getMessage());
+//            e.printStackTrace();
         }
 
-        String username = dto.getUsername();
-        String password = dto.getPassword();
+        if (Objects.isNull(dto)) {
+            log.error("전달받은 login 객체가 없습니다.");
+        }
 
+        String username = Objects.requireNonNull(dto).getUsername();
+        String password = dto.getPassword();
 
         log.info("Username is : {}", username);
         log.info("password is : {}", password);
@@ -94,7 +99,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
 
-
+        // TODO : login 을 성공했으니 db 에 refresh token 을 저장해 주어야함.
+        log.info("{} 님이 로그인 하였습니다.", user.getUsername());
 
         /* token header 로 던지기 */
 //        response.setHeader("access_token", access_token);

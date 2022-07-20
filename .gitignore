@@ -225,6 +225,11 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,macos,windows,java,visualstudiocode
-board-api/.idea
 .idea
+# Api
+board-api/.idea
 board-api/target
+# Web
+/board-web/.idea/
+/board-web/node_modules
+/board-web/.env

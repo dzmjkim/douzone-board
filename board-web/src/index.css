@@ -1,0 +1,65 @@
+/*Tailwind CSS Settings.*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .main_menu_btn {
+    display: flex;
+    flex-direction: column;
+    margin: 40px;
+  }
+  .main_menu_icon_btn {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    background-color: theme("colors.douzone.DEFAULT");
+    padding: 20px;
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    fill: white;
+  }
+  .validation-error {
+  }
+  .confirm-btn {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 2px;
+    background-color: theme("colors.douzone.DEFAULT");
+    width: 100%;
+    color: theme("colors.white");
+  }
+  .input_password,
+  .input_text {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 4vh;
+    margin: 4px;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.53px;
+    border-color: #303038;
+  }
+  .sub_copy {
+    margin-bottom: 30px;
+    font-size: 15px;
+    line-height: 21px;
+    letter-spacing: -0.6px;
+    text-align: center;
+    color: #303038;
+  }
+}
+:root{
+  --toastify-color-light: #fff;
+  --toastify-color-dark: #121212;
+  --toastify-color-info: #3498db;
+  --toastify-color-success: #07bc0c;
+  --toastify-color-warning: #f1c40f;
+  --toastify-color-error: #e74c3c;
+  --toastify-color-transparent: rgba(255, 255, 255, 0.7);
+}
+
+

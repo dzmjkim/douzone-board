@@ -65,7 +65,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(STATELESS) // 세션 설정 끄기
 
                 .and()
-                .cors().configurationSource(corsConfigurationSource()) // custom 으로 할때(밑에 Bean 있음.)
+                .cors().configurationSource(corsConfigurationSource()) // cors 설정을 custom 으로 할때(밑에 Bean 있음.)
 
                 .and()
                 .formLogin().disable()
@@ -73,8 +73,8 @@ public class SecurityConfig {
 
                 // 권한 설정
                 .authorizeHttpRequests()
-                .antMatchers("/login/**", "/api/token/refresh/**", "/user", "/register").permitAll()
-                .antMatchers(GET, "/api/user/**").hasAnyAuthority("ROLE_USER")
+                .antMatchers("/login/**", "/api/token/refresh/**", "/register").permitAll()
+                .antMatchers(GET, "/anonymity").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers(POST, "/api/user/save/**").hasAnyAuthority("ROLE_ADMIN") // 사용자를 저장하기 위해서는 관리자 권한이 필요.
                 .anyRequest().authenticated() // 모든경로는 인증을 받아야 한다.
 

@@ -22,6 +22,7 @@ public class AnonymityService {
     private final AnonymityRepository anonymityRepository;
 
     public List<AnonymityDto> findAll() {
+        log.info("익명 소리함을 열람합니다.");
         List<AnonymityDto> result = new ArrayList<>();
 
         for (Anonymity anonymity : anonymityRepository.findAll()) {
@@ -42,6 +43,8 @@ public class AnonymityService {
     }
 
     public void create(AnonymityReqDto reqDto) {
+        log.info("누군가 마음의 편지를 작성하였습니다.");
+
         anonymityRepository.save(Anonymity.builder()
                 .mailCreateDt(LocalDateTime.now())
                 .mailContent(reqDto.getMailContent())

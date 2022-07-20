@@ -3,6 +3,7 @@ package com.douzone.board.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Entity
@@ -25,6 +26,7 @@ public class UserRole{
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @NotNull
     private Role role;
 
 }

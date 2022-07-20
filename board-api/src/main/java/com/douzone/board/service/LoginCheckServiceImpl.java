@@ -21,10 +21,12 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LoginCheckServiceImpl implements LoginCheckService{
@@ -36,6 +38,7 @@ public class LoginCheckServiceImpl implements LoginCheckService{
     @Override
     public void checkRefresh(HttpServletRequest request,
                              HttpServletResponse response) {
+        log.info("refresh token 을 검증합니다.");
 
         // 사용자가 토큰을 갱신할 수 있도록 요청을 설정할 수 있는 다른 끝점을 만듭니다.
         // (refresh token 을 Client 가 보내면 그것을 받아서 만료기간을 확인 후 다른 access token 을 부여할 것입니다.)

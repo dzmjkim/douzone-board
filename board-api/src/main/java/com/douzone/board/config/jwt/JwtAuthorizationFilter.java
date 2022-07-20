@@ -32,16 +32,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-        Algorithm algorithm = Algorithm.HMAC256(JwtProperties.SECRET.getBytes());
-        JWTVerifier verifier = JWT.require(algorithm).build();
-        DecodedJWT decodedJWT;
-
-        String refreshTokentest = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2xvZ2luIiwiZXhwIjoxNjU4OTA1MjA0fQ.5zq7_4KQ_cltnD_aTTZAqFyKkwShlGsCQi4c5XgQVks";
-
-        decodedJWT = verifier.verify(refreshTokentest);
-
-
         // 1. 로그인 경로인지 확인 (login 은 여기에서 작업할 필요가 없기 때문.) == 아무일도 하지않을거임.
         if (request.getServletPath().equals("/login") || request.getServletPath().equals("/api/token/refresh")) {
             filterChain.doFilter(request, response);
@@ -54,8 +44,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 try {
                     // token 검증 작업
                     String token = authorizationHeader.substring("Bearer ".length());
-
-                    decodedJWT = verifier.verify(token);
+                    Algorithm algorithm = Algorithm.HMAC256(JwtProperties.SECRET.getBytes()); // 토큰 생성할 때와 같은 알고리즘으로 풀어야함.
+                    JWTVerifier verifier = JWT.require(algorithm).build();
+                    DecodedJWT decodedJWT = verifier.verify(token);
 
                     // 토큰이 유효한지 확인되면, 사용자의 이름을 가져올 수 있습니다.
                     String username = decodedJWT.getSubject(); // token 과 함께 제공되는 사용자 이름을 줍니다.

@@ -54,6 +54,12 @@ Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJp
 
 ###
 
-GET /logout
+POST /logout
 Content-Type: application/json
 Host: localhost:8080
+
+{
+  "username": "minjun"
+}
+
+###

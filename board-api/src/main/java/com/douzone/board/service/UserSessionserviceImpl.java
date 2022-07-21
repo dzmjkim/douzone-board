@@ -112,9 +112,12 @@ public class UserSessionserviceImpl implements UserSessionService {
 
     @Override
     public void logout(String name) {
+        name = "minjun";
         User user = userRepository.findByUsername(name);
 
         user.setRefreshToken(null);
+
+        userRepository.save(user);
 
     }
 

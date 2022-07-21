@@ -55,7 +55,7 @@ public class UserApiController {
         userSessionService.insertRefreshToken(request);
     }
 
-    @GetMapping("/deleteRefreshToken")
+    @PostMapping("/deleteRefreshToken")
     public void eraseRefreshToken(@RequestBody LogoutDto logoutDto){ userSessionService.logout(logoutDto.getUsername()); }
 
 }

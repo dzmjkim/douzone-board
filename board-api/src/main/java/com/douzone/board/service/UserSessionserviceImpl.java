@@ -36,6 +36,7 @@ public class UserSessionserviceImpl implements UserSessionService {
     private final UserRepository userRepository;
 
 
+
     @Override
     public void checkRefresh(HttpServletRequest request,
                              HttpServletResponse response) {
@@ -105,6 +106,12 @@ public class UserSessionserviceImpl implements UserSessionService {
 
         User user = userRepository.findByUsername(username);
 
+        if(Objects.nonNull(user.getRefreshToken())) {
+            if (!Objects.equals(user.getRefreshToken(), refreshToken)) {
+                new ObjectMapper().writeValue();
+            }
+        }
+
         user.setRefreshToken(refreshToken);
 
         userRepository.save(user);
@@ -112,7 +119,7 @@ public class UserSessionserviceImpl implements UserSessionService {
 
     @Override
     public void logout(String name) {
-        name = "minjun";
+
         User user = userRepository.findByUsername(name);
 
         user.setRefreshToken(null);

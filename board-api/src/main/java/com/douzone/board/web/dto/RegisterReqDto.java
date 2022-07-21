@@ -14,13 +14,18 @@ public class RegisterReqDto {
     private String username;
     @NotBlank
     private String password;
+//    @Size(min=1 , max = 2)
     private int userClass;
+
+    @NotBlank
+    private String name;
 
     public User toEntity() {
         return User.builder()
                 .username(username)
                 .password(password)
                 .userClass(userClass)
+                .name(this.name)
                 .build();
     }
 }

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 
 @Slf4j
@@ -51,8 +52,8 @@ public class UserApiController {
 
     @GetMapping("/inputrefresh")
     @ResponseStatus(HttpStatus.OK)
-    public void inputRefresh(HttpServletRequest request){
-        userSessionService.insertRefreshToken(request);
+    public void inputRefresh(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        userSessionService.insertRefreshToken(request,response);
     }
 
     @PostMapping("/deleteRefreshToken")

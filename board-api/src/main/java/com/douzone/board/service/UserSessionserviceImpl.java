@@ -12,6 +12,7 @@ import com.douzone.board.entity.User;
 import com.douzone.board.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -100,7 +102,7 @@ public class UserSessionserviceImpl implements UserSessionService {
         }
 
     @Override
-    public void insertRefreshToken(HttpServletRequest request) {
+    public void insertRefreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String refreshToken = request.getHeader(AUTHORIZATION);
         String username =  JWT.decode(refreshToken).getSubject();
 
@@ -108,9 +110,12 @@ public class UserSessionserviceImpl implements UserSessionService {
 
         if(Objects.nonNull(user.getRefreshToken())) {
             if (!Objects.equals(user.getRefreshToken(), refreshToken)) {
-                new ObjectMapper().writeValue();
+                log.error("Error logging in: refresh token not match");
+                response.setHeader("error", "refresh token is altered");
             }
         }
+
+        refreshToken = refreshToken.split("Bearer")[1];
 
         user.setRefreshToken(refreshToken);
 

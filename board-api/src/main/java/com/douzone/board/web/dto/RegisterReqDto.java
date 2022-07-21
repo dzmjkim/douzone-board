@@ -22,12 +22,16 @@ public class RegisterReqDto {
     @NotNull
     private Integer userClass;
 
+    @NotBlank
+    private String name;
+
     public User toEntity() {
         return User.builder()
                 .username(username)
                 .password(password)
                 .name(name)
                 .userClass(userClass)
+                .name(this.name)
                 .build();
     }
 }

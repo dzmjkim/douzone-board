@@ -12,7 +12,7 @@ import com.douzone.board.entity.User;
 import com.douzone.board.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.security.Principal;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +24,7 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class LoginCheckServiceImpl implements LoginCheckService{
+public class UserSessionserviceImpl implements UserSessionService {
 
     private final UserService userService;
     private final UserRepository userRepository;
+
 
 
     @Override
@@ -100,15 +102,35 @@ public class LoginCheckServiceImpl implements LoginCheckService{
         }
 
     @Override
-    public void insertRefreshToken(HttpServletRequest request) {
+    public void insertRefreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String refreshToken = request.getHeader(AUTHORIZATION);
         String username =  JWT.decode(refreshToken).getSubject();
 
         User user = userRepository.findByUsername(username);
 
+        if(Objects.nonNull(user.getRefreshToken())) {
+            if (!Objects.equals(user.getRefreshToken(), refreshToken)) {
+                log.error("Error logging in: refresh token not match");
+                response.setHeader("error", "refresh token is altered");
+            }
+        }
+
+        refreshToken = refreshToken.split("Bearer")[1];
+
         user.setRefreshToken(refreshToken);
 
         userRepository.save(user);
+    }
+
+    @Override
+    public void logout(String name) {
+
+        User user = userRepository.findByUsername(name);
+
+        user.setRefreshToken(null);
+
+        userRepository.save(user);
+
     }
 
 }

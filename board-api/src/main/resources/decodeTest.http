@@ -11,9 +11,10 @@ Host: localhost:8080
 
 {
   "username": "liverbird",
+  "name": "donghun",
   "password": "1234",
-  "userClass": 2,
-  "name": "donghun"
+  "userClass": 2
+
 }
 
 ###
@@ -32,7 +33,7 @@ Host: localhost:8080
 POST /anonymity
 Content-Type: application/json
 Host: localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6W10sImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9sb2dpbiIsImV4cCI6MTY1ODE0MTgzNn0.Af9i8B9Z6-gJLgxyamcyTYNuDHYk_QYUnhbLS1e68JY
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2xvZ2luIiwiZXhwIjoxNjU4NDA2NDEzfQ.-VWlVcZrUgTGopi8G2FHohqjU6XJKauPg2tXpzIfQi0
 
 {
   "mailContent": "힘들어요"
@@ -43,11 +44,23 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpc
 GET /api/token/refresh
 Content-Type: application/json
 Host: localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NTkwMDc3ODF9.o1PrOC6XSvf6iXSHSIDc98dmlP6bkTTW8Us1ODEd0dw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NTkyNjk4Nzh9.5b5uTq1GKxIyTJK7yoAlvG2KgczIrUhFvjxu1qd3NS4
 
 ###
 
 GET /inputrefresh
 Content-Type: application/json
 Host: localhost:8080
-Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NTkwMDc3ODF9.o1PrOC6XSvf6iXSHSIDc98dmlP6bkTTW8Us1ODEd0dw
+Authorization: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NTkyNjk4Nzh9.5b5uTq1GKxIyTJK7yoAlvG2KgczIrUhFvjxu1qd3NS4
+
+###
+
+POST /logout
+Content-Type: application/json
+Host: localhost:8080
+
+{
+  "username": "liverbird"
+}
+
+###

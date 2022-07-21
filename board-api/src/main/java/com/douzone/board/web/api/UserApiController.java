@@ -1,8 +1,9 @@
 package com.douzone.board.web.api;
 
 import com.douzone.board.entity.User;
-import com.douzone.board.service.LoginCheckService;
+import com.douzone.board.service.UserSessionService;
 import com.douzone.board.service.UserService;
+import com.douzone.board.web.dto.LogoutDto;
 import com.douzone.board.web.dto.RegisterReqDto;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,7 +21,6 @@ import javax.management.openmbean.KeyAlreadyExistsException;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
-import java.security.Principal;
 
 @Slf4j
 @RestController
@@ -27,7 +28,7 @@ import java.security.Principal;
 @RequestMapping
 public class UserApiController {
     private final UserService userService;
-    private final LoginCheckService loginCheckService;
+    private final UserSessionService userSessionService;
 
     // 회원가입
     @PostMapping("/register")
@@ -47,13 +48,16 @@ public class UserApiController {
 
     @GetMapping("/api/token/refresh")
     public void refreshTokenCheck(HttpServletRequest request, HttpServletResponse response){
-        loginCheckService.checkRefresh(request, response);
+        userSessionService.checkRefresh(request, response);
     }
 
     @GetMapping("/inputrefresh")
     @ResponseStatus(HttpStatus.OK)
-    public void inputRefresh(HttpServletRequest request){
-        loginCheckService.insertRefreshToken(request);
+    public void inputRefresh(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        userSessionService.insertRefreshToken(request,response);
     }
+
+    @PostMapping("/deleteRefreshToken")
+    public void eraseRefreshToken(@RequestBody LogoutDto logoutDto){ userSessionService.logout(logoutDto.getUsername()); }
 
 }

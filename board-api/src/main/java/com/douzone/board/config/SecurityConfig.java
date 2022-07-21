@@ -2,6 +2,7 @@ package com.douzone.board.config;
 
 import com.douzone.board.config.jwt.JwtAuthorizationFilter;
 import com.douzone.board.config.jwt.JwtAuthenticationFilter;
+import com.douzone.board.handler.CustomLogoutSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -80,6 +82,10 @@ public class SecurityConfig {
 
                 // 필터랑 password encoder 등 이것저것 추가?
                 .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(logoutSuccessHandler())
+                .and()
                 .authenticationManager(authenticationManager)
                 .addFilter(authenticationFilter) // 인증필터
                 .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class); // 권한필터 // 모든 요청을 받으려면 다른 필터들 보다 먼저 처리되어야 한다.
@@ -101,5 +107,10 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler(){
+        return new CustomLogoutSuccessHandler();
     }
 }

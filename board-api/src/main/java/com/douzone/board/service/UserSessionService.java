@@ -2,10 +2,13 @@ package com.douzone.board.service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.Principal;
+import java.io.IOException;
 
-public interface LoginCheckService {
+public interface UserSessionService {
     void checkRefresh(HttpServletRequest request, HttpServletResponse response);
 
-    void insertRefreshToken(HttpServletRequest request);
+    void insertRefreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException;
+
+
+    void logout(String name);
 }

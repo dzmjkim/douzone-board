@@ -7,8 +7,9 @@ import com.douzone.board.repository.RoleRepository;
 import com.douzone.board.repository.UserRepository;
 import com.douzone.board.repository.UserRoleRepository;
 
-import javax.management.openmbean.KeyAlreadyExistsException;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.douzone.board.utils.SendResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,10 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.io.IOException;
+import java.util.*;
+
+import static org.springframework.http.HttpStatus.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,14 +35,20 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
 
-    public User create(User user) throws IllegalAccessException {
+    public User create(User user, HttpServletResponse response) throws IllegalAccessException, IOException {
         log.info("계정을 생성합니다. username => {}", user.getUsername());
 
         // TODO : 찍어보자
         // 이미 가입된 유저라면
         if (Objects.nonNull(userRepository.findByUsername(user.getUsername()))) {
             log.error("이미 가입된 유저입니다. username -> " + user.getUsername());
-            throw new KeyAlreadyExistsException("이미 가입된 유저입니다. username -> " + user.getUsername());
+
+            // error 전송
+            SendResponseUtils.sendBody(CONFLICT.value(), "이미 가입된 유저입니다.", response);
+
+            // 회원가입 시 아이디 중복은 흔한 일인데 이걸 굳이 exception 을 던져서 프로그램을 뻗다이 시켜야하는가?
+            return new User();
+//            throw new KeyAlreadyExistsException("이미 가입된 유저입니다. username -> " + user.getUsername());
         }
 
         Role role = roleRepository.findById(1L).orElseThrow(IllegalAccessException::new);
@@ -49,8 +56,8 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         UserRole userRole = UserRole.builder()
-            .user(user)
-            .role(role).build();
+                .user(user)
+                .role(role).build();
 
         userRoleRepository.save(userRole);
 
@@ -104,7 +111,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void addRoleToUser(String username, String roleName) {
-        log.info("userRole을 추가합니다 role => {} to user => {}",roleName, username);
+        log.info("userRole을 추가합니다 role => {} to user => {}", roleName, username);
         User user = userRepository.findByUsername(username);
         Role role = roleRepository.findByName(roleName);
 

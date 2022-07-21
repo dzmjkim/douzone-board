@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.douzone.board.utils.SendResponseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,13 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 // 요청 필터당 하나만 존재하는 필터이기 때문에 application 으로 들어오는 모든 요청을 여기에서 가로챕니다.
 // 그리고, 사용자가 application 자원에 access 권한이 있는지를 논리적으로 처리해주면 된다.
@@ -33,7 +30,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 1. 로그인 경로인지 확인 (login 은 여기에서 작업할 필요가 없기 때문.) == 아무일도 하지않을거임.
-        if (request.getServletPath().equals("/login") || request.getServletPath().equals("/api/token/refresh")) {
+        if (request.getServletPath().equals("/login") || request.getServletPath().equals("/register")) {
             filterChain.doFilter(request, response);
         } else {
             // 2. 권한 부여 헤더에 access
@@ -67,20 +64,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                     filterChain.doFilter(request, response);
                 } catch (Exception exception) {
                     // exception 1 : token 이 유효하지 않을 때 (token 을 확인할 수 없거나, 유효기간이 지났을 경우)
-
                     log.error("Error logging in: {}", exception.getMessage());
-                    response.setHeader("error", exception.getMessage());
-
-                    /* error 를 403 으로 던지기 (둘중 하나만 할 수 있음) */
-//                    response.sendError(FORBIDDEN.value()); // 권한이 없기 때문에 403 던져버리기~!
-
-                    /* error 를 body 로 던지기 (둘중 하나만 할 수 있음) */
-                    response.setStatus(UNAUTHORIZED.value());
-                    Map<String, String> error = new HashMap<>();
-                    error.put("error_message", exception.getMessage());
-                    response.setContentType(APPLICATION_JSON_VALUE);
-                    new ObjectMapper().writeValue(response.getOutputStream(), error);
-
+                    // error 던지기
+                    SendResponseUtils.sendBody(UNAUTHORIZED.value(), exception.getMessage(), response);
                 }
             } else {
                 filterChain.doFilter(request, response);

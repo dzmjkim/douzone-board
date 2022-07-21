@@ -4,6 +4,7 @@ import com.douzone.board.entity.User;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
@@ -12,10 +13,14 @@ public class RegisterReqDto {
     @Size(min = 2, max = 20)
     @NotBlank
     private String username;
+
     @NotBlank
     private String password;
-//    @Size(min=1 , max = 2)
-    private int userClass;
+
+    @NotBlank(message = "이름은 비어있으면 안됩니다.")
+    private String name;
+    @NotNull
+    private Integer userClass;
 
     @NotBlank
     private String name;
@@ -24,6 +29,7 @@ public class RegisterReqDto {
         return User.builder()
                 .username(username)
                 .password(password)
+                .name(name)
                 .userClass(userClass)
                 .name(this.name)
                 .build();

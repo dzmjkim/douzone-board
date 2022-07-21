@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 import java.util.Objects;
+
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,6 +28,9 @@ import java.util.Objects;
 public class PostApiController {
     private final PostService postService;
 
+    /**
+     * 게시글 조회
+     */
     @GetMapping("/board")
     public ResponseEntity<List<PostDto>> getAll() {
         return ResponseEntity.ok().body(postService.findAll());

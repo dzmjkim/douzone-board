@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.security.Principal;
 
@@ -30,8 +31,9 @@ public class UserApiController {
 
     // 회원가입
     @PostMapping("/register")
-    public ResponseEntity<User> register(@Valid @RequestBody RegisterReqDto dto, BindingResult bindingResult)
-        throws IllegalAccessException {
+    public ResponseEntity<User> register(@Valid @RequestBody RegisterReqDto dto, BindingResult bindingResult,
+                                         HttpServletResponse response)
+            throws IllegalAccessException, IOException {
         log.info("회원가입을 시도합니다. username => " + dto.getUsername());
 
         if (bindingResult.hasErrors()) {
@@ -40,7 +42,7 @@ public class UserApiController {
 
         User user = dto.toEntity(); // dto -> entity
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/register").toUriString());
-        return ResponseEntity.created(uri).body(userService.create(user));
+        return ResponseEntity.created(uri).body(userService.create(user, response));
     }
 
     @GetMapping("/api/token/refresh")

@@ -42,8 +42,11 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "assignment_dt")
-    @NotNull
     private Assignment assignment;
+
+    @ManyToOne
+    @JoinColumn(name="post_id")
+    private Board board;
 
     @ManyToOne
     @JoinColumn(name = "top_comment_id")

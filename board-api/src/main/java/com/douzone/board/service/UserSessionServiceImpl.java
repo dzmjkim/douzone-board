@@ -24,7 +24,6 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserSessionserviceImpl implements UserSessionService {
+public class UserSessionServiceImpl implements UserSessionService {
 
     private final UserService userService;
     private final UserRepository userRepository;
@@ -104,6 +103,7 @@ public class UserSessionserviceImpl implements UserSessionService {
     @Override
     public void insertRefreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String refreshToken = request.getHeader(AUTHORIZATION);
+        refreshToken = refreshToken.split("Bearer ")[1];
         String username =  JWT.decode(refreshToken).getSubject();
 
         User user = userRepository.findByUsername(username);
@@ -115,7 +115,6 @@ public class UserSessionserviceImpl implements UserSessionService {
             }
         }
 
-        refreshToken = refreshToken.split("Bearer")[1];
 
         user.setRefreshToken(refreshToken);
 

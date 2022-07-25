@@ -22,8 +22,6 @@ public class RegisterReqDto {
     @NotNull
     private Integer userClass;
 
-    @NotBlank
-    private String name;
 
     public User toEntity() {
         return User.builder()

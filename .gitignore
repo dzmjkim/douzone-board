@@ -230,3 +230,4 @@ board-api/.idea
 board-api/target
 .idea
 board-api/board-api.iml
+board-api/douzone-board.iml

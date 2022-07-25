@@ -14,7 +14,6 @@ Host: localhost:8080
   "name": "donghun",
   "password": "1234",
   "userClass": 2
-
 }
 
 ###
@@ -44,14 +43,14 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpc
 GET /api/token/refresh
 Content-Type: application/json
 Host: localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NTkyNjk4Nzh9.5b5uTq1GKxIyTJK7yoAlvG2KgczIrUhFvjxu1qd3NS4
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NTk2MjYxNjZ9.M_70iAdV55PBgHhZy2VlMXFG0gZLJHBMJSLEW7R5fkM
 
 ###
 
 GET /inputrefresh
 Content-Type: application/json
 Host: localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NTk2MjA0MzJ9.fV8T4UAKE5WpI4nMaJDfQsS9hsy-ey8YfVS8MEZDbi4
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NTk2MjYxNjZ9.M_70iAdV55PBgHhZy2VlMXFG0gZLJHBMJSLEW7R5fkM
 
 ###
 

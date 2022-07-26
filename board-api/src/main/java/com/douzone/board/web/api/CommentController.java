@@ -24,7 +24,7 @@ public class CommentController {
 
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.OK)
-	public void newComment(CommentDto commentDto){
+	public void newComment(@RequestBody CommentDto commentDto){
 		commentService.createComment(commentDto);
 	}
 }

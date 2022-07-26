@@ -30,7 +30,7 @@ public class CommentServiceImpl implements CommentService {
 						.commentContent(comment.getCommentContent())
 						.commentId(comment.getCommentId())
 						.userId(comment.getUser().getId())
-						.topCommentNo(comment.getComment().getCommentId())
+						.topCommentNo(comment.getTopCommentNo())
 						.postNo(comment.getBoard().getPostNo())
 						.build()));
 
@@ -43,6 +43,7 @@ public class CommentServiceImpl implements CommentService {
 				.commentContent(commentDto.getCommentContent())
 				.board(boardRepository.findById(commentDto.getPostNo()).orElseThrow(IllegalArgumentException::new))
 				.commentCreateDt(LocalDateTime.now())
-				.user(userRepository.findByUsername(commentDto.getuser)).build());
+				.user(userRepository.findById(commentDto.getUserId()).orElseThrow(IllegalArgumentException::new))
+				.topCommentNo(commentDto.getTopCommentNo()).build());
 	}
 }

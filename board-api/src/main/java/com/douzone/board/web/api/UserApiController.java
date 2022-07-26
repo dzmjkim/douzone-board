@@ -31,7 +31,7 @@ public class UserApiController {
     private final UserSessionService userSessionService;
 
     // 회원가입
-    @PostMapping("/register")
+    @PostMapping("api/users/register")
     public ResponseEntity<User> register(@Valid @RequestBody RegisterReqDto dto, BindingResult bindingResult,
                                          HttpServletResponse response)
             throws IllegalAccessException, IOException {
@@ -51,13 +51,13 @@ public class UserApiController {
         userSessionService.checkRefresh(request, response);
     }
 
-    @GetMapping("/inputrefresh")
+    @GetMapping("api/token/save-refresh")
     @ResponseStatus(HttpStatus.OK)
     public void inputRefresh(HttpServletRequest request,HttpServletResponse response) throws IOException {
         userSessionService.insertRefreshToken(request,response);
     }
 
-    @PostMapping("/deleteRefreshToken")
+    @PostMapping("api/token/remove-refresh")
     public void eraseRefreshToken(@RequestBody LogoutDto logoutDto){ userSessionService.logout(logoutDto.getUsername()); }
 
 }

@@ -4,11 +4,11 @@ import com.douzone.board.service.comments.CommentService;
 import com.douzone.board.web.dto.AssignmentCommentDto;
 import java.time.LocalDate;
 import java.util.List;
+
+import com.douzone.board.web.dto.CommentDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,8 +17,14 @@ public class CommentController {
 
 	private final CommentService commentService;
 
-	@GetMapping("/getAll/{assignmentDt}")
-	public List<AssignmentCommentDto> getAllComments(@PathVariable LocalDate assignmentDt){
-		return commentService.findAll();
+	@GetMapping("/getAllByPost/{postNo}")
+	public List<CommentDto> getAllCommentsByPostNo(@PathVariable Long postNo){
+		return commentService.findAll(postNo);
+	}
+
+	@PostMapping("/create")
+	@ResponseStatus(HttpStatus.OK)
+	public void newComment(CommentDto commentDto){
+		commentService.createComment(commentDto);
 	}
 }

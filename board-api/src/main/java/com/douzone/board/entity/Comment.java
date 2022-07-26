@@ -19,10 +19,6 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-    @Column(name = "board_category")
-    @NotNull
-    private String boardCategory;
-
     @Column(name = "comment_content")
     @NotNull
     private String commentContent;

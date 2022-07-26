@@ -1,8 +1,13 @@
 package com.douzone.board.service.comments;
 
-import com.douzone.board.web.dto.AssignmentCommentDto;
+import com.douzone.board.web.dto.CommentDto;
+
 import java.util.List;
 
 public interface CommentService {
-	List<AssignmentCommentDto> findAll();
+	List<CommentDto> findAll(Long postNo);
+
+    void createComment(CommentDto commentDto);
+
+
 }

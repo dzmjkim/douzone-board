@@ -19,10 +19,6 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
-    @Column(name = "board_category")
-    @NotNull
-    private String boardCategory;
-
     @Column(name = "comment_content")
     @NotNull
     private String commentContent;
@@ -45,13 +41,12 @@ public class Comment {
     private Assignment assignment;
 
     @ManyToOne
-    @JoinColumn(name="post_id")
+    @JoinColumn(name="postNo")
     private Board board;
 
-    @ManyToOne
-    @JoinColumn(name = "top_comment_id")
     @NotNull
-    private Comment comment;
+    @Column(name = "top_comment_no")
+    private Long topCommentNo;
 
 
 }

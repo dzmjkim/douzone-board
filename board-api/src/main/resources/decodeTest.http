@@ -63,3 +63,15 @@ Host: localhost:8080
 }
 
 ###
+
+POST /comments/create
+Content-Type: application/json
+Host:localhost:8080
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2xvZ2luIiwiZXhwIjoxNjU4ODM5ODYwfQ.EE6gi02SsrK4hGYTbbrjPGYA0xfzlGKKqGILePXOowA
+
+{
+  "commentContent": "댓글1-2",
+  "userId": 6,
+  "postNo": 4,
+  "topCommentNo": 1
+}

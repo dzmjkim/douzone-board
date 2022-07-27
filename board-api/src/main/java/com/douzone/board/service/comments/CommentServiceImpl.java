@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService {
 		comments.forEach(comment ->
 				commentList.add(CommentDto.builder()
 						.commentContent(comment.getCommentContent())
-						.commentId(comment.getCommentId())
+						.commentNo(comment.getCommentNo())
 						.userId(comment.getUser().getId())
 						.topCommentNo(comment.getTopCommentNo())
 						.postNo(comment.getBoard().getPostNo())
@@ -45,5 +45,20 @@ public class CommentServiceImpl implements CommentService {
 				.commentCreateDt(LocalDateTime.now())
 				.user(userRepository.findById(commentDto.getUserId()).orElseThrow(IllegalArgumentException::new))
 				.topCommentNo(commentDto.getTopCommentNo()).build());
+	}
+
+	@Override
+	public void modifyComment(CommentDto commentDto) {
+
+		Comment comment = commentRepository.findById(commentDto.getCommentNo()).orElseThrow(NullPointerException::new);
+		comment.setCommentContent(commentDto.getCommentContent());
+		comment.setCommentModifyDt(LocalDateTime.now());
+
+		commentRepository.save(comment);
+	}
+
+	@Override
+	public void removeComment(Long commentId) {
+		commentRepository.deleteById(commentId);
 	}
 }

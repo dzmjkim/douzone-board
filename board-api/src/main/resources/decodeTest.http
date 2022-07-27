@@ -75,3 +75,22 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpc
   "postNo": 4,
   "topCommentNo": 1
 }
+
+###
+
+PUT /comments/modify
+Content-Type: application/json
+Host: localhost:8080
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2xvZ2luIiwiZXhwIjoxNjU4OTIwMjU4fQ.i4ZIOpyYHAKod_Zc3MJpX-LOdSb4n8t0ElbecNb-CnU
+
+{
+  "commentNo": 3,
+  "commentContent": "수정 댓글 1-2"
+}
+
+###
+
+DELETE /comments/delete/3
+Content-Type: application/json
+Host: localhost:8080
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2xvZ2luIiwiZXhwIjoxNjU4OTIwMjU4fQ.i4ZIOpyYHAKod_Zc3MJpX-LOdSb4n8t0ElbecNb-CnU

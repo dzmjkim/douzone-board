@@ -10,4 +10,7 @@ public interface CommentService {
     void createComment(CommentDto commentDto);
 
 
+    void modifyComment(CommentDto commentDto);
+
+    void removeComment(Long commentId);
 }

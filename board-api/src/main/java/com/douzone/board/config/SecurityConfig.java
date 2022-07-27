@@ -60,7 +60,7 @@ public class SecurityConfig {
          *  다른 주소로 해주고 싶으면 이런방식을 사용할 수 있습니다.
          */
         JwtAuthenticationFilter authenticationFilter = new JwtAuthenticationFilter(authenticationManager);
-        authenticationFilter.setFilterProcessesUrl("/login");
+        authenticationFilter.setFilterProcessesUrl("/api/login");
 
         http
                 .csrf().disable()
@@ -83,7 +83,7 @@ public class SecurityConfig {
                 // 필터랑 password encoder 등 이것저것 추가?
                 .and()
                 .logout()
-                .logoutUrl("/logout")
+                .logoutUrl("/api/logout")
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .and()
                 .authenticationManager(authenticationManager)

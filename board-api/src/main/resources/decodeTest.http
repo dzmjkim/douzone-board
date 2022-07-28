@@ -18,7 +18,7 @@ Host: localhost:8080
 
 ###
 
-POST /login
+POST /api/login
 Content-Type: application/json
 Host: localhost:8080
 
@@ -47,10 +47,10 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpc
 
 ###
 
-GET /inputrefresh
+GET /api/token/save-refresh
 Content-Type: application/json
 Host: localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvbG9naW4iLCJleHAiOjE2NTk2MjYxNjZ9.M_70iAdV55PBgHhZy2VlMXFG0gZLJHBMJSLEW7R5fkM
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL2xvZ2luIiwiZXhwIjoxNjU5ODQ0NzY0fQ.ln5C1h1JOCqWD2zm2bfK9ENXfltFtHX_YEJ3iaa_jqY
 
 ###
 

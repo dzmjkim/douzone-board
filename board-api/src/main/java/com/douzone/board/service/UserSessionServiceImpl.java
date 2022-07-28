@@ -74,6 +74,12 @@ public class UserSessionServiceImpl implements UserSessionService {
                                                  Collectors.toList()))
                                              .sign(algorithm);
 
+                    refreshToken = JWT.create()
+                            .withSubject(user.getUsername())
+                            .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.REFRESH_TOKEN_EXPIRATION_TIME))
+                            .withIssuer(request.getRequestURL().toString())
+                            .sign(algorithm);
+
                     /* token body 로 던지기 */
                     Map<String, String> tokens = new HashMap<>();
                     tokens.put("access_token", access_token);

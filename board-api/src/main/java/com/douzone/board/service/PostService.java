@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -53,5 +54,27 @@ public class PostService {
                 .postCreateDt(LocalDateTime.now())
                 .user(userRepository.findByUsername(username))
                 .build());
+    }
+
+    public PostDto findById(Long id) {
+        log.info("{} 번 게시글을 조회합니다.", id);
+
+        Optional<Board> findBoard = boardRepository.findById(id);
+
+        if (findBoard.isPresent()) {
+            Board board = findBoard.get();
+            User user = board.getUser();
+
+            return PostDto.builder()
+                    .postNo(board.getPostNo())
+                    .postTitle(board.getPostTitle())
+                    .postContent(board.getPostContent())
+                    .postCreateDt(board.getPostCreateDt())
+                    .postModifyDt(board.getPostModifyDt())
+                    .userDto(new UserDto(user.getUsername(), user.getName(), user.getUserClass()))
+                    .build();
+        }
+
+        return null;
     }
 }

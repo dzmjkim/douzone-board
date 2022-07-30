@@ -85,6 +85,12 @@ public class UserSessionServiceImpl implements UserSessionService {
                     tokens.put("access_token", access_token);
                     tokens.put("refresh_token", refreshToken);
 
+                    User userForSaveRefreshToken = userRepository.findByUsername(username);
+
+                    userForSaveRefreshToken.setRefreshToken(refreshToken);
+
+                    userRepository.save(userForSaveRefreshToken);
+
                     response.setContentType(APPLICATION_JSON_VALUE);
                     new ObjectMapper().writeValue(response.getOutputStream(), tokens);
                 } catch (Exception exception) {
@@ -108,23 +114,30 @@ public class UserSessionServiceImpl implements UserSessionService {
 
     @Override
     public void insertRefreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String refreshToken = request.getHeader(AUTHORIZATION);
-        refreshToken = refreshToken.split("Bearer ")[1];
+
+        Map<String, String> tokens = (Map<String, String>) request.getAttribute("tokens");
+
+        String refreshToken = tokens.get("refresh_token");
+
         String username =  JWT.decode(refreshToken).getSubject();
 
         User user = userRepository.findByUsername(username);
 
-        if(Objects.nonNull(user.getRefreshToken())) {
-            if (!Objects.equals(user.getRefreshToken(), refreshToken)) {
-                log.error("Error logging in: refresh token not match");
-                response.setHeader("error", "refresh token is altered");
-            }
-        }
+//        if(Objects.nonNull(user.getRefreshToken())) {
+//            if (!Objects.equals(user.getRefreshToken(), refreshToken)) {
+//                log.error("Error logging in: refresh token not match");
+//                response.setHeader("error", "refresh token is altered");
+//            }
+//        }
 
 
         user.setRefreshToken(refreshToken);
 
         userRepository.save(user);
+
+        response.setContentType(APPLICATION_JSON_VALUE);
+
+        new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }
 
     @Override

@@ -16,7 +16,7 @@ public class CustomLogoutSuccessHandler implements org.springframework.security.
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
-        request.getRequestDispatcher("/deleteRefreshToken").forward(request,response);
+        request.getRequestDispatcher("/api/token/remove-refresh").forward(request,response);
 
     }
 }

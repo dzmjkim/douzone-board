@@ -51,7 +51,7 @@ public class UserApiController {
         userSessionService.checkRefresh(request, response);
     }
 
-    @GetMapping("api/token/save-refresh")
+    @PostMapping("/api/token/save-refresh")
     @ResponseStatus(HttpStatus.OK)
     public void inputRefresh(HttpServletRequest request,HttpServletResponse response) throws IOException {
         userSessionService.insertRefreshToken(request,response);

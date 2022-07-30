@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,5 +46,13 @@ public class PostApiController {
 
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/board").toUriString());
         return ResponseEntity.created(uri).build();
+    }
+
+    /**
+     * 단일 게시글 조회
+     */
+    @GetMapping("/board/{id}")
+    public ResponseEntity<PostDto> getPost(@PathVariable Long id) {
+        return ResponseEntity.ok().body(postService.findById(id));
     }
 }

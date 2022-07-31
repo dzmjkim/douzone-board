@@ -20,6 +20,8 @@ public class CommentDto {
 
     private String commentContent;
 
+    private String username;
+
     private Long userId;
 
     private LocalDate assignment;

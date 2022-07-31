@@ -64,6 +64,13 @@ Host: localhost:8080
 
 ###
 
+GET /api/comments/getAllByPost/4
+Content-Type: application/json
+Host: localhost:8080
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY1OTI2OTIwMH0.OwPJ1-uoDShTdMG7dfqhMdSwMiEmI4U1H5HjarD5rRM
+
+###
+
 POST /comments/create
 Content-Type: application/json
 Host:localhost:8080

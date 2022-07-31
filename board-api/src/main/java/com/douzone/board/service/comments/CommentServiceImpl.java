@@ -30,6 +30,7 @@ public class CommentServiceImpl implements CommentService {
 						.commentContent(comment.getCommentContent())
 						.commentNo(comment.getCommentNo())
 						.userId(comment.getUser().getId())
+						.username(comment.getUser().getUsername())
 						.topCommentNo(comment.getTopCommentNo())
 						.postNo(comment.getBoard().getPostNo())
 						.build()));

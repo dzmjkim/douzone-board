@@ -2,6 +2,8 @@ package com.douzone.board.service.comments;
 
 import com.douzone.board.web.dto.CommentDto;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public interface CommentService {
@@ -12,5 +14,5 @@ public interface CommentService {
 
     void modifyComment(CommentDto commentDto);
 
-    void removeComment(Long commentId);
+    void removeComment(Long commentId, HttpServletRequest request, HttpServletResponse response);
 }

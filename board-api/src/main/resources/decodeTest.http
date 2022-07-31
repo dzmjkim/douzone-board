@@ -32,7 +32,7 @@ Host: localhost:8080
 POST /anonymity
 Content-Type: application/json
 Host: localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2xvZ2luIiwiZXhwIjoxNjU4NDA2NDEzfQ.-VWlVcZrUgTGopi8G2FHohqjU6XJKauPg2tXpzIfQi0
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJhdWQiOiJST0xFX1VTRVIiLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvYXBpL2xvZ2luIiwiZXhwIjoxNjU5MjcxNzgzfQ.vaPmUZqDscYgSXH-R7_GHTOQZgu08u44-m4oazKr1-g
 
 {
   "mailContent": "힘들어요"
@@ -71,16 +71,16 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpc
 
 ###
 
-POST /comments/create
+POST /api/comments/create
 Content-Type: application/json
 Host:localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2xvZ2luIiwiZXhwIjoxNjU4ODM5ODYwfQ.EE6gi02SsrK4hGYTbbrjPGYA0xfzlGKKqGILePXOowA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY1OTI3MTQwNn0.TXA9fKfAxk3ywvS8AxxSe0iPr3fi9rrFBDo9woGFb3E
 
 {
-  "commentContent": "댓글1-2",
-  "userId": 6,
+  "commentContent": "댓글3",
+  "userId": 27,
   "postNo": 4,
-  "topCommentNo": 1
+  "topCommentNo": 0
 }
 
 ###
@@ -97,7 +97,7 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpc
 
 ###
 
-DELETE /comments/remove/3
+DELETE /api/comments/remove/11
 Content-Type: application/json
 Host: localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2xvZ2luIiwiZXhwIjoxNjU4OTIwMjU4fQ.i4ZIOpyYHAKod_Zc3MJpX-LOdSb4n8t0ElbecNb-CnU
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY1OTI3MTQwNn0.TXA9fKfAxk3ywvS8AxxSe0iPr3fi9rrFBDo9woGFb3E

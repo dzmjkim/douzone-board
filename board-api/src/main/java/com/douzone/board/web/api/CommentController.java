@@ -10,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/comments")
@@ -23,7 +27,7 @@ public class CommentController {
 	}
 
 	@PostMapping("/create")
-	@ResponseStatus(HttpStatus.OK)
+	@ResponseStatus(HttpStatus.CREATED)
 	public void newComment(@RequestBody CommentDto commentDto){
 		commentService.createComment(commentDto);
 	}
@@ -34,6 +38,7 @@ public class CommentController {
 
 	@DeleteMapping("/remove/{commentId}")
 	@ResponseStatus(HttpStatus.OK)
-	public void eraseComment(@PathVariable Long commentId){ commentService.removeComment(commentId); };
+	public void eraseComment(@PathVariable Long commentId, HttpServletRequest request, HttpServletResponse response){
+		commentService.removeComment(commentId, request, response); };
 	
 }

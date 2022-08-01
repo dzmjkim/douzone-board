@@ -22,6 +22,8 @@ public class CommentDto {
 
     private String username;
 
+    private String name;
+
     private Long userId;
 
     private LocalDate assignment;

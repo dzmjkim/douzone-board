@@ -2,6 +2,7 @@ package com.douzone.board.service.comments;
 
 import com.auth0.jwt.JWT;
 import com.douzone.board.entity.Comment;
+import com.douzone.board.entity.User;
 import com.douzone.board.repository.BoardRepository;
 import com.douzone.board.repository.CommentRepository;
 
@@ -32,15 +33,21 @@ public class CommentServiceImpl implements CommentService {
 		List<CommentDto> commentList = new ArrayList<>();
 		List<Comment> comments = commentRepository.findAllByBoardPostNo(postNo);
 
-		comments.forEach(comment ->
+		comments.forEach(comment -> {
+
+				User user = comment.getUser();
+
 				commentList.add(CommentDto.builder()
 						.commentContent(comment.getCommentContent())
 						.commentNo(comment.getCommentNo())
-						.userId(comment.getUser().getId())
-						.username(comment.getUser().getUsername())
+						.userId(user.getId())
+						.name(user.getName())
+						.username(user.getUsername())
 						.topCommentNo(comment.getTopCommentNo())
 						.postNo(comment.getBoard().getPostNo())
-						.build()));
+						.build());
+				}
+		);
 
 		return commentList;
 	}

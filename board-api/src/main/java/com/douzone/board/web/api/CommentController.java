@@ -28,8 +28,8 @@ public class CommentController {
 
 	@PostMapping("/create")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void newComment(@RequestBody CommentDto commentDto){
-		commentService.createComment(commentDto);
+	public void newComment(@RequestBody CommentDto commentDto, HttpServletRequest request){
+		commentService.createComment(commentDto, request);
 	}
 
 	@PutMapping("/modify")

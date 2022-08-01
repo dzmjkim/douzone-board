@@ -3,6 +3,7 @@ package com.douzone.board.service;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import antlr.CommonASTWithHiddenTokens;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -141,9 +142,13 @@ public class UserSessionServiceImpl implements UserSessionService {
     }
 
     @Override
-    public void logout(String name) {
+    public void logout(HttpServletRequest request) {
 
-        User user = userRepository.findByUsername(name);
+        String token = request.getHeader(AUTHORIZATION);
+        token = token.split("Bearer ")[1];
+        String username = JWT.decode(token).getSubject();
+
+        User user = userRepository.findByUsername(username);
 
         user.setRefreshToken(null);
 

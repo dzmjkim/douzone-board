@@ -9,7 +9,7 @@ import java.util.List;
 public interface CommentService {
 	List<CommentDto> findAll(Long postNo);
 
-    void createComment(CommentDto commentDto);
+    void createComment(CommentDto commentDto, HttpServletRequest request);
 
 
     void modifyComment(CommentDto commentDto);

@@ -58,6 +58,6 @@ public class UserApiController {
     }
 
     @PostMapping("api/token/remove-refresh")
-    public void eraseRefreshToken(@RequestBody LogoutDto logoutDto){ userSessionService.logout(logoutDto.getUsername()); }
+    public void eraseRefreshToken(HttpServletRequest request){ userSessionService.logout(request); }
 
 }

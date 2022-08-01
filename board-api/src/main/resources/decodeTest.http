@@ -57,10 +57,7 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpc
 POST /api/logout
 Content-Type: application/json
 Host: localhost:8080
-
-{
-  "username": "liverbird"
-}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY1OTM1MjU0Mn0.5XnSnB6KEAWwwlMgWaRHW_YLJotqe0bL0oxkXckYyHE
 
 ###
 
@@ -73,12 +70,11 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpc
 
 POST /api/comments/create
 Content-Type: application/json
-Host:localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY1OTI3MTQwNn0.TXA9fKfAxk3ywvS8AxxSe0iPr3fi9rrFBDo9woGFb3E
+Host: localhost:8080
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY1OTM1MjU3M30.6e8ucnynGG5nI5VD4Zg9UfelIIkEGyDkaIo5PGTVtrs
 
 {
   "commentContent": "댓글3",
-  "userId": 27,
   "postNo": 4,
   "topCommentNo": 0
 }
@@ -100,4 +96,4 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpc
 DELETE /api/comments/remove/11
 Content-Type: application/json
 Host: localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY1OTI3MTQwNn0.TXA9fKfAxk3ywvS8AxxSe0iPr3fi9rrFBDo9woGFb3E
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsaXZlcmJpcmQiLCJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaS9sb2dpbiIsImV4cCI6MTY1OTM1MjU3M30.6e8ucnynGG5nI5VD4Zg9UfelIIkEGyDkaIo5PGTVtrs

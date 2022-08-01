@@ -13,9 +13,6 @@ import java.util.Objects;
 import com.douzone.board.repository.UserRepository;
 import com.douzone.board.web.dto.CommentDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.parser.Authorization;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,12 +46,16 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	@Override
-	public void createComment(CommentDto commentDto) {
+	public void createComment(CommentDto commentDto, HttpServletRequest request) {
+		String token = request.getHeader(AUTHORIZATION);
+		token = token.split("Bearer ")[1];
+		String username = JWT.decode(token).getSubject();
+
 		commentRepository.save(Comment.builder()
 				.commentContent(commentDto.getCommentContent())
 				.board(boardRepository.findById(commentDto.getPostNo()).orElseThrow(IllegalArgumentException::new))
 				.commentCreateDt(LocalDateTime.now())
-				.user(userRepository.findById(commentDto.getUserId()).orElseThrow(IllegalArgumentException::new))
+				.user(userRepository.findByUsername(username))
 				.topCommentNo(commentDto.getTopCommentNo()).build());
 	}
 

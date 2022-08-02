@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -30,7 +31,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 1. 로그인 경로인지 확인 (login 은 여기에서 작업할 필요가 없기 때문.) == 아무일도 하지않을거임.
-        if (request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/users/register") || request.getServletPath().equals("/api/token/save-refresh") || request.getServletPath().equals("/api/token/refresh")) {
+        if (request.getServletPath().equals("/api/login") || request.getServletPath().equals("/api/users/register") || request.getServletPath().equals("/api/token/save-refresh") || request.getServletPath().equals("/api/token/refresh") ||
+        request.getServletPath().equals("/anonymity") && Objects.equals(request.getMethod(), "POST")) {
             filterChain.doFilter(request, response);
         } else {
             // 2. 권한 부여 헤더에 access

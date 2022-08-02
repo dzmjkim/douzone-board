@@ -31,7 +31,7 @@ public class UserApiController {
     private final UserSessionService userSessionService;
 
     // 회원가입
-    @PostMapping("api/users/register")
+    @PostMapping("/api/users/register")
     public ResponseEntity<User> register(@Valid @RequestBody RegisterReqDto dto, BindingResult bindingResult,
                                          HttpServletResponse response)
             throws IllegalAccessException, IOException {
@@ -57,7 +57,7 @@ public class UserApiController {
         userSessionService.insertRefreshToken(request,response);
     }
 
-    @PostMapping("api/token/remove-refresh")
+    @PostMapping("/api/token/remove-refresh")
     public void eraseRefreshToken(HttpServletRequest request){ userSessionService.logout(request); }
 
 }

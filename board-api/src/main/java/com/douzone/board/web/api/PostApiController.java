@@ -42,10 +42,9 @@ public class PostApiController {
             log.error("게시글 제목 또는 내용이 비어있습니다. 제목 => {} 내용 => {}", dto.getPostTitle(), dto.getPostContent());
             return ResponseEntity.badRequest().build();
         }
-        postService.create(dto, principal.getName());
 
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/board").toUriString());
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(postService.create(dto, principal.getName()));
     }
 
     /**
